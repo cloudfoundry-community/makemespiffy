@@ -5,7 +5,7 @@ require 'makemespiffy/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "makemespiffy"
-  spec.version       = Makemespiffy::VERSION
+  spec.version       = MakeMeSpiffy::VERSION
   spec.authors       = ["Dr Nic Williams"]
   spec.email         = ["drnicwilliams@gmail.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}

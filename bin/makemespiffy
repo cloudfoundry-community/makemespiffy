@@ -12,5 +12,4 @@ if ARGV[3].nil? || ARGV[3].length == 0
   exit 1
 end
 
-require "yaml"
-manifest = YAML.load_file(input_manifest)
+manifest = MakeMeSpiffy::InputManifest.from_file(input_manifest)

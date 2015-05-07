@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2014 Stark & Wayne, LLC
+# Copyright (c) 2015 Stark & Wayne, LLC
 
 ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
 
@@ -10,21 +10,17 @@ $:.unshift(File.expand_path("../../lib", __FILE__))
 
 require "rspec/core"
 
-require "bosh/gen/settings"
+require "makemespiffy"
 
 # load all files in spec/support/* (but not lower down)
 Dir[File.dirname(__FILE__) + '/support/*'].each do |path|
   require path unless File.directory?(path)
 end
 
-def fixture_release_path(name)
-  File.expand_path("../fixtures/releases/#{name}/", __FILE__)
+def fixture_path(path)
+  File.join(File.expand_path("../fixtures", __FILE__), path)
 end
 
 RSpec.configure do |c|
-  c.before do
-    extend GeneratorSpecHelper
-    setup_universe
-  end
   c.color = true
 end
