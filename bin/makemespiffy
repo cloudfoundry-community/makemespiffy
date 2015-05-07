@@ -1,3 +1,16 @@
 #!/usr/bin/env ruby
 
 require 'makemespiffy'
+
+input_manifest=ARGV[0]
+input_scope=ARGV[1]
+output_spiff_template=ARGV[2]
+output_meta_scope=ARGV[3]
+
+if ARGV[3].nil? || ARGV[3].length == 0
+  $stderr.puts "USAGE: makemespiffy manifest.yml properties.something templates/properties.yml meta.something"
+  exit 1
+end
+
+require "yaml"
+manifest = YAML.load_file(input_manifest)
