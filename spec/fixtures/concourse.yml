@@ -1,7 +1,7 @@
 ---
 name: concourse
 
-director_uuid: <%= `bosh status --uuid` %>
+director_uuid: 3b9806e6-f540-11e4-a153-6c4008a663f0
 
 releases:
   - name: concourse
