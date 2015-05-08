@@ -10,7 +10,7 @@ describe MakeMeSpiffy::InputManifest do
           @value = subject.spiffy("name", "meta.name")
         end
         it {expect(subject.manifest["name"]).to eq "(( meta.name ))"}
-        it {expect(subject.manifest["meta"]).to eq({"name" => "concourse"}) }
+        it {expect(subject.manifest["meta"]).to eq({"name" => "(( merge ))"}) }
         it {expect(@value).to eq "concourse"}
       end
     end

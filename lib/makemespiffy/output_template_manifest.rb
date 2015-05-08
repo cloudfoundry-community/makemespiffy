@@ -1,25 +1,20 @@
 require "yaml"
 
 module MakeMeSpiffy
-  class InputManifest
+  class OutputTemplateManifest
     attr_reader :manifest
 
     def self.from_file(manifest_path)
-      file = YAML.load_file(manifest_path)
+      if File.exist?(manifest_path)
+        file = YAML.load_file(manifest_path)
+      else
+        file = {}
+      end
       self.new(file)
     end
 
     def initialize(bosh_manifest_yaml)
       @manifest = bosh_manifest_yaml
-    end
-
-    # Primary method to replace a chunk of manifest with a (( meta.scope ))
-    def spiffy(extraction_scope, meta_scope)
-      if value = manifest[extraction_scope]
-        manifest[extraction_scope] = "(( #{meta_scope} ))"
-        insert_scope_value(meta_scope, "(( merge ))")
-      end
-      return value
     end
 
     # Usage: insert_scope_value("meta.foo.bar", 1234)

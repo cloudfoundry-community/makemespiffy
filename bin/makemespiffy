@@ -14,7 +14,9 @@ end
 
 input_manifest = MakeMeSpiffy::InputManifest.from_file(input_manifest_path)
 value = input_manifest.spiffy(input_scope, output_meta_scope)
-# output_manifest = MakeMeSpiffy::InputManifest.new({})
+
+output_manifest = MakeMeSpiffy::OutputTemplateManifest.from_file(output_spiff_template_path)
+output_manifest.insert_scope_value(output_meta_scope, value)
 
 #
 # (( x.y.z )) is rendered as "(( x.y.z ))" in to_yaml; so explicitly
@@ -38,4 +40,7 @@ end
 
 File.open(input_manifest_path, "w") do |file|
   file << t.yaml
+end
+File.open(output_spiff_template_path, "w") do |file|
+  file << output_manifest.manifest.to_yaml
 end
