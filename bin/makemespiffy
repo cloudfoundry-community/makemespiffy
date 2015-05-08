@@ -36,4 +36,6 @@ t.grep(Psych::Nodes::Scalar).each do |node|
   node.style  = Psych::Nodes::Scalar::PLAIN
 end
 
-puts t.yaml
+File.open(input_manifest_path, "w") do |file|
+  file << t.yaml
+end
