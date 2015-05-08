@@ -6,7 +6,6 @@ cd $DIR/..
 set -e
 
 source_manifest=${source_manifest:-spec/fixtures/concourse.yml}
-manifest=tmp/manifest.yml
 makemespiffy() {
   bundle exec bin/makemespiffy $@
 }
@@ -15,6 +14,7 @@ rm -rf tmp
 mkdir -p tmp
 cp ${source_manifest} tmp/manifest.yml
 
+manifest=tmp/manifest.yml
 makemespiffy ${manifest} name tmp/name.yml meta.name
 makemespiffy ${manifest} director_uuid tmp/director.yml meta.director_uuid
 makemespiffy ${manifest} releases tmp/stub.yml meta.releases
