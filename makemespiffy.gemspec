@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["drnicwilliams@gmail.com"]
   spec.summary       = %q{Convert a flat BOSH manifest for something into a set of Spiff templates.}
   spec.description   = %q{Convert a flat BOSH manifest for something into a set of Spiff templates.}
-  spec.homepage      = "https://bosh.io"
+  spec.homepage      = "https://github.com/cloudfoundry-community/makemespiffy"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
