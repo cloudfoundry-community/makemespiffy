@@ -18,16 +18,23 @@ module MakeMeSpiffy
     # Primary method to replace a chunk of manifest with a (( meta.scope ))
     def spiffy(extraction_scope, meta_scope)
       part, *other_parts = extraction_scope.split('.')
+
+      if manifest.is_a?(Array)
+        part_value = manifest.find { |item| item["name"] == part }
+      else
+        part_value = manifest[part]
+      end
+
       if other_parts.size == 0
-        if value = manifest[part]
+        if part_value
           manifest[extraction_scope] = "(( #{meta_scope} ))"
         end
-        return value
+        return part_value
       else
-        unless manifest[part]
+        unless part_value
           raise UnknownScopeError, extraction_scope
         end
-        inner_manifest = InputManifest.new(manifest[part])
+        inner_manifest = InputManifest.new(part_value)
         return inner_manifest.spiffy(other_parts.join("."), meta_scope)
       end
     end

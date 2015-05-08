@@ -55,7 +55,6 @@ describe MakeMeSpiffy::InputManifest do
         end
         it {expect(subject.manifest["jobs"][0]["name"]).to eq "web"}
         it {expect(subject.manifest["jobs"][0]["instances"]).to eq "(( meta.instances.web ))"}
-        it {expect(subject.manifest["meta"["instances"]["web"]]).to eq("(( merge ))") }
         it {expect(@value).to eq 1}
       end
     end
