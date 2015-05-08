@@ -1,6 +1,22 @@
 require "yaml"
 
 module MakeMeSpiffy
+  class SpiffParam
+    def initialize(key)
+      @key = key
+    end
+    def to_s
+      "(( #{@key} ))"
+    end
+    def encode_with(coder)
+      coder.tag = "!x"
+      coder.style = Psych::Nodes::Mapping::FLOW
+
+      # coder.type = ":scalar"
+      coder.scalar = to_s
+    end
+  end
+
   class InputManifest
     attr_reader :manifest
 
@@ -16,7 +32,7 @@ module MakeMeSpiffy
     # Primary method to replace a chunk of manifest with a (( meta.scope ))
     def spiffy(extraction_scope, meta_scope)
       if value = manifest[extraction_scope]
-        manifest[extraction_scope] = "(( #{meta_scope} ))"
+        manifest[extraction_scope] = SpiffParam.new(meta_scope)
         insert_meta_scope(meta_scope, value)
       end
       return value

@@ -2,9 +2,9 @@
 
 require 'makemespiffy'
 
-input_manifest=ARGV[0]
+input_manifest_path=ARGV[0]
 input_scope=ARGV[1]
-output_spiff_template=ARGV[2]
+output_spiff_template_path=ARGV[2]
 output_meta_scope=ARGV[3]
 
 if ARGV[3].nil? || ARGV[3].length == 0
@@ -12,4 +12,28 @@ if ARGV[3].nil? || ARGV[3].length == 0
   exit 1
 end
 
-manifest = MakeMeSpiffy::InputManifest.from_file(input_manifest)
+input_manifest = MakeMeSpiffy::InputManifest.from_file(input_manifest_path)
+value = input_manifest.spiffy(input_scope, output_meta_scope)
+# output_manifest = MakeMeSpiffy::InputManifest.new({})
+
+#
+# (( x.y.z )) is rendered as "(( x.y.z ))" in to_yaml; so explicitly
+# construct the YAMLTree
+#
+# Thanks @tenderlove for https://gist.github.com/tenderlove/8c3988b8f797dfee0a3a
+#
+def tree o, options = {}
+  visitor = Psych::Visitors::YAMLTree.create options
+  visitor << o
+  visitor.tree
+end
+
+t = tree(input_manifest.manifest)
+# find scalar nodes and modify them
+t.grep(Psych::Nodes::Scalar).each do |node|
+  node.plain  = true
+  node.quoted = false
+  node.style  = Psych::Nodes::Scalar::PLAIN
+end
+
+puts t.yaml
