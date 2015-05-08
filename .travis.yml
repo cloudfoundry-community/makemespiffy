@@ -1,0 +1,7 @@
+language: ruby
+script: bundle exec rspec
+notifications:
+  email:
+    recipients:
+      - drnicwilliams@gmail.com
+
