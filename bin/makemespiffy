@@ -14,6 +14,7 @@ end
 
 input_manifest = MakeMeSpiffy::InputManifest.from_file(input_manifest_path)
 value = input_manifest.spiffy(input_scope, output_meta_scope)
+input_manifest.insert_scope_value(output_meta_scope, "(( merge ))")
 
 output_manifest = MakeMeSpiffy::OutputTemplateManifest.from_file(output_spiff_template_path)
 output_manifest.insert_scope_value(output_meta_scope, value)

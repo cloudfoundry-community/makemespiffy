@@ -4,6 +4,8 @@ module MakeMeSpiffy
   class InputManifest
     attr_reader :manifest
 
+    class UnknownScopeError < Exception; end
+
     def self.from_file(manifest_path)
       file = YAML.load_file(manifest_path)
       self.new(file)
@@ -15,11 +17,19 @@ module MakeMeSpiffy
 
     # Primary method to replace a chunk of manifest with a (( meta.scope ))
     def spiffy(extraction_scope, meta_scope)
-      if value = manifest[extraction_scope]
-        manifest[extraction_scope] = "(( #{meta_scope} ))"
-        insert_scope_value(meta_scope, "(( merge ))")
+      part, *other_parts = extraction_scope.split('.')
+      if other_parts.size == 0
+        if value = manifest[part]
+          manifest[extraction_scope] = "(( #{meta_scope} ))"
+        end
+        return value
+      else
+        unless manifest[part]
+          raise UnknownScopeError, extraction_scope
+        end
+        inner_manifest = InputManifest.new(manifest[part])
+        return inner_manifest.spiffy(other_parts.join("."), meta_scope)
       end
-      return value
     end
 
     # Usage: insert_scope_value("meta.foo.bar", 1234)
