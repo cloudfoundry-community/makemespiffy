@@ -5,8 +5,8 @@ Convert a flat BOSH manifest for something into a set of Spiff templates.
 
 This is being developed to help migrate flat BOSH manifests into a standardised Concourse pipeline that could deploy anything.
 
-The plan
---------
+Usage
+-----
 
 Given a BOSH manifest `manifest.yml`, run the command multiple times to extract data into spiff templates:
 
@@ -48,4 +48,11 @@ Complex objects can be extracted too:
 
 ```
 makemespiffy manifest.yml "networks.cf1.subnets" environment/networking.yml meta.subnets.cf1
+```
+
+Installation
+------------
+
+```
+gem install makemespiffy
 ```
